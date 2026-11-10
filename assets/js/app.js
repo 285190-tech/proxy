@@ -27,12 +27,18 @@
     { slug: 'memory-match', name: 'Memory Match', cat: 'Puzzle', accent: '#00e5ff',
       desc: 'Six pairs of neon glyphs. Flip fast, forget never.',
       icon: '<rect x="3" y="6" width="11" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18 4l3 14-3 .8L15 6.4z" fill="currentColor" opacity=".8"/>' },
+    { slug: 'echo', name: 'Echo', cat: 'Classic', accent: '#b26bff', original: true,
+      desc: 'ORIGINAL — Simon says, vault edition. Watch the pattern, sing it back, survive the tempo.',
+      icon: '<rect x="4" y="4" width="7" height="7" rx="2" fill="currentColor"/><rect x="13" y="4" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="13" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="13" width="7" height="7" rx="2" fill="currentColor" opacity=".45"/>' },
     { slug: 'tic-tac-toe', name: 'Tic-Tac-Toe', cat: 'Classic', accent: '#eceaff',
       desc: 'Three in a row against a minimax machine that never bluffs.',
       icon: '<path d="M4 9.3h16M4 14.7h16M9.3 4v16M14.7 4v16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".6"/><path d="M6.2 6.2l4 4m0-4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="15.4" cy="15.3" r="2.7" fill="none" stroke="currentColor" stroke-width="2"/>' },
     { slug: 'whack-a-mole', name: 'Whack-a-Mole', cat: 'Action', accent: '#ff4d5e',
       desc: 'Forty-five seconds, nine holes, zero mercy. Golden moles pay double.',
       icon: '<path d="M6 15a6 6 0 0 1 12 0" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8.5 11.5 7 8m8.5 3.5L17 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10.4" cy="12.6" r=".9" fill="currentColor"/><circle cx="13.6" cy="12.6" r=".9" fill="currentColor"/><path d="M4 19h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>' },
+    { slug: 'neon-sort', name: 'Neon Sort', cat: 'Learn', accent: '#ffd23f', original: true,
+      desc: 'ORIGINAL — Watch six algorithms race under neon light, then name them blind in Guess That Sort.',
+      icon: '<g fill="currentColor"><rect x="3.5" y="13" width="4" height="7" rx="1" opacity=".55"/><rect x="10" y="9" width="4" height="11" rx="1" opacity=".75"/><rect x="16.5" y="4" width="4" height="16" rx="1"/></g>' },
     { slug: 'comet-catcher', name: 'Comet Catcher', cat: 'Original', accent: '#ff2ea6', original: true,
       desc: 'ORIGINAL — Pilot the VAULT-9 scoop. Catch comets, dodge meteors, survive the storm.',
       icon: '<path d="M4 18 14 8M6 21 16 11M3 13 9 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><path d="M14.5 3.5 20 4l.5 5.5-4 4-5-5z" fill="currentColor"/>' },
@@ -41,7 +47,7 @@
       icon: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><path d="M12 12 18 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 3a9 9 0 0 1 7.8 4.5" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/>' }
   ];
 
-  var CATEGORIES = ['All', 'Action', 'Puzzle', 'Classic', 'Original'];
+  var CATEGORIES = ['All', 'Action', 'Puzzle', 'Classic', 'Original', 'Learn'];
   var grid = document.getElementById('gameGrid');
   var emptyState = document.getElementById('emptyState');
   var searchInput = document.getElementById('searchInput');

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo — The Neon Memory Duel</title>
+<meta name="description" content="Watch the vault hum a pattern, then play it back. Four glowing pads, one flawless memory. A Neon Vault original — keyboard and touch.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+<style>
+.echo-wrap { display:flex; flex-direction:column; gap:16px; align-items:center; padding:6px 2px; }
+.echo-board { display:grid; grid-template-columns:repeat(2, minmax(0, 118px)); gap:16px; }
+.echo-pad {
+  width:100%; aspect-ratio:1; border-radius:22px; border:2px solid var(--line);
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  background:var(--panel-2); transition:transform .12s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  -webkit-tap-highlight-color:transparent; touch-action:manipulation; padding:0;
+}
+.echo-pad svg { width:38%; height:38%; opacity:.5; transition:opacity .18s ease, transform .18s ease; }
+.echo-pad:active { transform:scale(.96); }
+.echo-pad--cyan   { --pad:#00e5ff; }
+.echo-pad--magenta{ --pad:#ff2ea6; }
+.echo-pad--amber  { --pad:#ffc247; }
+.echo-pad--lime   { --pad:#a6ff3f; }
+.echo-pad { border-color: color-mix(in srgb, var(--pad) 35%, var(--line)); }
+.echo-pad svg { color: var(--pad); }
+.echo-pad.is-lit {
+  background: var(--pad);
+  border-color: var(--pad);
+  box-shadow: 0 0 34px var(--pad), inset 0 0 22px rgba(255,255,255,.45);
+  transform: scale(1.05);
+}
+.echo-pad.is-lit svg { color:#0b0714; opacity:1; transform:scale(1.12); }
+.echo-board.is-error .echo-pad { border-color:var(--red); box-shadow:0 0 26px rgba(255,77,94,.6); }
+.echo-board.is-locked .echo-pad { cursor:default; }
+.echo-status { font-family:'Press Start 2P',monospace; font-size:9px; letter-spacing:1px; color:var(--dim); min-height:18px; text-align:center; }
+.echo-status b { color:var(--amber); font-weight:400; }
+@media (max-width:480px) { .echo-board { grid-template-columns:repeat(2, minmax(0, 96px)); gap:12px; } }
+</style>
+</head>
+<body class="game-page" data-game="echo">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">ECHO</div>
+  <div class="chrome-actions">
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item">ROUND<span id="round">–</span></div>
+    <div class="hud-item">SCORE<span id="score">0</span></div>
+    <div class="hud-item hud-item--magenta">BEST<span id="best">0</span></div>
+    <div class="hud-actions">
+      <button type="button" class="nv-btn" id="restartBtn">RESTART</button>
+    </div>
+  </div>
+  <div class="stage stage--pad" id="stage">
+    <div class="echo-wrap">
+      <div class="echo-board" id="board" role="group" aria-label="Echo pads">
+        <button type="button" class="echo-pad echo-pad--cyan" data-pad="0" aria-label="Cyan pad, key 1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 21 20H3z" fill="currentColor"/></svg></button>
+        <button type="button" class="echo-pad echo-pad--magenta" data-pad="1" aria-label="Magenta pad, key 2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6" fill="currentColor"/></svg></button>
+        <button type="button" class="echo-pad echo-pad--amber" data-pad="2" aria-label="Amber pad, key 3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3.2" fill="currentColor"/></svg></button>
+        <button type="button" class="echo-pad echo-pad--lime" data-pad="3" aria-label="Lime pad, key 4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.4l2.8 5.8 6.4.8-4.7 4.4 1.2 6.3-5.7-3-5.7 3 1.2-6.3L3.8 9l6.4-.8z" fill="currentColor"/></svg></button>
+      </div>
+      <div class="echo-status" id="status" aria-live="polite">Press start — the vault will hum first</div>
+    </div>
+    <div class="stage-overlay" id="overlay" role="dialog" aria-label="Game state">
+      <h2 class="overlay-title" id="overlayTitle">ECHO</h2>
+      <p class="overlay-sub" id="overlaySub">Watch the pads sing. Repeat the pattern. Each round adds one more note to remember.</p>
+      <p class="overlay-score" id="overlayScore"></p>
+      <button type="button" class="nv-btn" id="overlayBtn">BEGIN</button>
+    </div>
+  </div>
+  <p class="game-help"><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> or tap the pads · watch the sequence, then repeat it · the tempo rises every round · <kbd>R</kbd> restart.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="echo.js"></script>
+</body>
+</html>
