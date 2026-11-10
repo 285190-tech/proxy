@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neon Vault — Free Browser Arcade</title>
-<meta name="description" content="Neon Vault is a free, fast, static browser arcade: twelve hand-built games from Snake and Tetris to original originals, with CRT glow, synthesized sound and zero accounts or tracking.">
+<meta name="description" content="Neon Vault is a free, fast, static browser arcade: twenty-two hand-built games from Snake and Tetris to neon originals, an algorithm arena and a shelf of automaton toys, with CRT glow, synthesized sound and zero accounts or tracking.">
 <meta name="theme-color" content="#0b0714">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,10 +27,10 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C16.3 4.8 17.3 5.1 18.3 5.4c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.7 5.6-5.3 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A10.5 10.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
       SOURCE
     </a>
-    <button class="icon-btn" id="crtToggle" aria-pressed="false" aria-label="Toggle CRT filter" title="CRT filter">
+    <button type="button" class="icon-btn" id="crtToggle" aria-pressed="false" aria-label="Toggle CRT filter" title="CRT filter">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="14" rx="2.5"/><path d="M8 21h8M12 18v3"/></svg>
     </button>
-    <button class="icon-btn" id="muteToggle" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off">
+    <button type="button" class="icon-btn" id="muteToggle" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off">
       <svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg>
       <svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg>
     </button>
@@ -42,8 +42,8 @@
   <div class="hero-copy">
     <span class="coin-line"><span class="coin-dot"></span>INSERT COIN — FREE ENTRY</span>
     <h1 class="hero-title"><span class="l1">NEON</span><br><span class="l2">VAULT</span></h1>
-    <p class="hero-tag">The high-voltage browser arcade. Twelve cabinets, zero quarters.</p>
-    <p class="hero-sub">Snake, Tetris, Space Invaders and nine more hand-built cabinets — including <strong>two originals you won't find anywhere else</strong>. Everything runs locally in your browser: no downloads, no accounts, no ads, no tracking. Your high scores live on your own device.</p>
+    <p class="hero-tag">The high-voltage browser arcade. Twenty-two cabinets, zero quarters.</p>
+    <p class="hero-sub">Snake, Tetris, Space Invaders and nineteen more hand-built cabinets — including <strong>four originals you won't find anywhere else</strong>. Everything runs locally in your browser: no downloads, no accounts, no ads, no tracking. Your high scores live on your own device.</p>
     <div class="hero-ctas">
       <a class="big-btn" href="#library">PRESS START
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -53,9 +53,9 @@
         SURPRISE ME
       </button>
     </div>
-    <div class="hero-facts" aria-label="Vault facts">
-      <div class="fact"><b>12</b><span>fully playable cabinets</span></div>
-      <div class="fact"><b>2</b><span>original Neon Vault games</span></div>
+    <div class="hero-facts" role="group" aria-label="Vault facts">
+      <div class="fact"><b>22</b><span>fully playable cabinets</span></div>
+      <div class="fact"><b>4</b><span>original Neon Vault games</span></div>
       <div class="fact"><b>0</b><span>accounts, ads or trackers</span></div>
     </div>
   </div>
@@ -102,7 +102,7 @@
 <section class="shelf" id="library" aria-label="Game library">
   <div class="shelf-head">
     <h2 class="shelf-title"><span class="tick">▸</span>THE CABINETS</h2>
-    <span class="shelf-note"><span id="visibleCount">12</span> of 12 shown</span>
+    <span class="shelf-note"><span id="visibleCount">22</span> of 22 shown</span>
   </div>
   <div class="controls">
     <div class="search-wrap">
@@ -120,14 +120,14 @@
 
 <!-- ══════════ FOOTER ══════════ -->
 <footer class="footer">
-  <small><strong style="color:var(--text)">NEON VAULT</strong> is a static, open-source arcade. No accounts, no ads, no analytics, no cookies — scores and preferences never leave your browser. Every game runs offline once loaded.</small>
+  <small><strong class="footer-strong">NEON VAULT</strong> is a static, open-source arcade. No accounts, no ads, no analytics, no cookies — scores and preferences never leave your browser. Every game runs offline once loaded.</small>
   <div class="footer-links">
     <a href="https://github.com/285190-tech/proxy" target="_blank" rel="noopener noreferrer">GitHub</a>
     <a href="DEPLOY.md">Deploy your own</a>
   </div>
 </footer>
 
-<noscript><p style="padding:24px;text-align:center;color:#ffc247;font-family:monospace">Neon Vault needs JavaScript to run its cabinets.</p></noscript>
+<noscript><p class="noscript-note">Neon Vault needs JavaScript to run its cabinets.</p></noscript>
 <script src="assets/js/audio.js"></script>
 <script src="assets/js/nv.js"></script>
 <script src="assets/js/app.js"></script>

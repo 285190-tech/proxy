@@ -168,3 +168,14 @@ body.crt::after {
   .nv-btn { min-height: 44px; }
   .chrome-logo { font-size: 9px; }
 }
+
+/* ---------- Utility classes (replacing inline styles) ---------- */
+.canvas-fluid { width: min(480px, 94vw); height: auto; }
+.canvas-fluid--square { width: min(420px, 92vw); height: auto; cursor: pointer; touch-action: none; }
+.canvas-fluid--tetris { width: min(220px, 58vw); height: auto; }
+.tetris-layout { display: flex; gap: 14px; align-items: flex-start; }
+.tetris-side { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.tetris-next-label { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--dim); letter-spacing: 1px; }
+.tetris-next-canvas { background: #0a0716; border: 1px solid var(--line); border-radius: 10px; }
+.touch-btn--fire { min-width: 170px; height: 68px; font-size: 11px; }
+.nv-btn--small { min-height: 40px; padding: 0 14px; }

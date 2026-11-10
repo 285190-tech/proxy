@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow Vault — Painting with Invisible Wind</title>
+<meta name="description" content="A Neon Vault original: a thousand neon motes ride a hidden wind. Bend the storm with your finger, switch palettes, watch the vault paint itself.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+</head>
+<body class="game-page" data-game="flow-vault">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">FLOW VAULT</div>
+  <div class="chrome-actions">
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item">MOTES<span id="moteCount">1200</span></div>
+    <div class="hud-item hud-item--magenta">PALETTE<span id="paletteName">CYBER</span></div>
+    <div class="hud-actions">
+      <button type="button" class="nv-btn nv-btn--ghost" id="calmBtn">STORM → CALM</button>
+      <button type="button" class="nv-btn nv-btn--ghost" id="paletteBtn">PALETTE</button>
+      <button type="button" class="nv-btn" id="reseedBtn">NEW WIND</button>
+      <button type="button" class="nv-btn nv-btn--ghost" id="wipeBtn">WIPE</button>
+    </div>
+  </div>
+  <div class="stage" id="stage">
+    <canvas id="flowCanvas" width="660" height="440" role="application" aria-label="Generative flow field canvas — hold to stir the wind" class="canvas-fluid"></canvas>
+  </div>
+  <p class="game-help">Twelve hundred motes surf a hidden wind field. <strong>Hold the canvas</strong> to seize the wind and swirl it around your finger · <strong>PALETTE</strong> cycles CYBER / AURORA / EMBER · <kbd>R</kbd> new wind · <kbd>C</kbd> wipe the canvas.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="flow-vault.js"></script>
+</body>
+</html>

@@ -42,7 +42,7 @@
   <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
   <div class="chrome-game">2048</div>
   <div class="chrome-actions">
-    <button class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
   </div>
 </header>
 <main class="game-main">
@@ -55,7 +55,7 @@
     </div>
   </div>
   <div class="stage stage--pad" id="stage">
-    <div class="g2048-board" id="board" aria-label="2048 board">
+    <div class="g2048-board" id="board" role="group" aria-label="2048 board">
       <div class="g2048-cell"></div><div class="g2048-cell"></div><div class="g2048-cell"></div><div class="g2048-cell"></div>
       <div class="g2048-cell"></div><div class="g2048-cell"></div><div class="g2048-cell"></div><div class="g2048-cell"></div>
       <div class="g2048-cell"></div><div class="g2048-cell"></div><div class="g2048-cell"></div><div class="g2048-cell"></div>
@@ -68,11 +68,11 @@
       <button class="nv-btn" id="overlayBtn" type="button">KEEP GOING</button>
     </div>
   </div>
-  <div class="touch-controls" data-desktop-hide="true" aria-label="Touch controls">
-    <button class="touch-btn" data-dir="up" aria-label="Slide up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 14 7-7 7 7"/></svg></button>
-    <button class="touch-btn" data-dir="left" aria-label="Slide left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l-7 7 7 7"/></svg></button>
-    <button class="touch-btn" data-dir="down" aria-label="Slide down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 10 7 7 7-7"/></svg></button>
-    <button class="touch-btn" data-dir="right" aria-label="Slide right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5l7 7-7 7"/></svg></button>
+  <div class="touch-controls" data-desktop-hide="true" role="group" aria-label="Touch controls">
+    <button type="button" class="touch-btn" data-dir="up" aria-label="Slide up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 14 7-7 7 7"/></svg></button>
+    <button type="button" class="touch-btn" data-dir="left" aria-label="Slide left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l-7 7 7 7"/></svg></button>
+    <button type="button" class="touch-btn" data-dir="down" aria-label="Slide down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 10 7 7 7-7"/></svg></button>
+    <button type="button" class="touch-btn" data-dir="right" aria-label="Slide right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5l7 7-7 7"/></svg></button>
   </div>
   <p class="game-help"><kbd>←→↑↓</kbd> / <kbd>WASD</kbd> slide · swipe on the board · merge matching tiles to reach <strong>2048</strong> · <kbd>R</kbd> restart.</p>
 </main>

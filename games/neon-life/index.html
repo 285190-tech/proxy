@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Life — Conway's Automaton, Charged Up</title>
+<meta name="description" content="A Neon Vault original: Conway's Game of Life in pure signal. Paint cells, seed the classics, watch three rules eat the dark.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+<style>
+.nl-wrap { display:flex; flex-direction:column; gap:12px; align-items:center; padding:6px 2px; width:100%; }
+.nl-canvas { width:100%; max-width:660px; height:auto; display:block; border-radius:16px; border:2px solid var(--line); background:#0d0a1c; box-shadow:0 0 34px rgba(166,255,63,.10), inset 0 0 44px rgba(0,0,0,.55); cursor:crosshair; touch-action:none; }
+.nl-presets { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.nl-chip { font-family:'Press Start 2P',monospace; font-size:7px; letter-spacing:1px; padding:8px 11px; border-radius:999px; border:1px solid var(--line); background:var(--panel-2); color:var(--dim); cursor:pointer; transition:all .15s ease; -webkit-tap-highlight-color:transparent; }
+.nl-chip:hover { border-color:var(--lime); color:var(--text); }
+.nl-speed { display:flex; align-items:center; gap:10px; font-family:'Press Start 2P',monospace; font-size:7px; color:var(--dim); letter-spacing:1px; }
+.nl-speed input[type=range] { accent-color:var(--lime); width:120px; }
+</style>
+</head>
+<body class="game-page" data-game="neon-life">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">NEON LIFE</div>
+  <div class="chrome-actions">
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item">GEN<span id="generation">0</span></div>
+    <div class="hud-item">CELLS<span id="population">0</span></div>
+    <div class="hud-actions">
+      <button type="button" class="nv-btn nv-btn--ghost" id="stepBtn">STEP</button>
+      <button type="button" class="nv-btn" id="playBtn">PLAY</button>
+      <button type="button" class="nv-btn nv-btn--ghost" id="randomBtn">RANDOM</button>
+      <button type="button" class="nv-btn nv-btn--ghost" id="clearBtn">CLEAR</button>
+    </div>
+  </div>
+  <div class="stage stage--pad" id="stage">
+    <div class="nl-wrap">
+      <canvas id="lifeCanvas" width="660" height="440" role="application" aria-label="Game of Life canvas — drag to paint cells" class="nl-canvas"></canvas>
+      <div class="nl-presets" id="presets" role="group" aria-label="Lifeform presets"></div>
+      <label class="nl-speed">SPEED<input type="range" id="speedRange" min="1" max="20" value="5" step="1" aria-label="Generations per second"></label>
+    </div>
+  </div>
+  <p class="game-help">Drag on the grid to paint cells · rules: lonely cells die, crowded cells die, exactly three births one · presets drop in the classics · <kbd>Space</kbd> play/pause · <kbd>S</kbd> step · <kbd>R</kbd> random soup.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="neon-life.js"></script>
+</body>
+</html>
