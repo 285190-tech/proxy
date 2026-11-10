@@ -1,6 +1,6 @@
 # Neon Vault — Free Browser Arcade
 
-A free, fast, fully static arcade for your browser. Fourteen hand-built cabinets,
+A free, fast, fully static arcade for your browser. Seventeen hand-built cabinets,
 synthwave/CRT styling, synthesized sound, zero accounts, zero ads, zero tracking.
 Everything runs locally in the page.
 
@@ -22,6 +22,9 @@ Everything runs locally in the page.
 | Whack-a-Mole | Action | 45s rounds, golden moles, bombs |
 | Echo | Classic | **Neon Vault original** — pattern memory, tempo ramps |
 | Neon Sort | Learn | **Neon Vault original** — algorithm visualizer + Guess That Sort quiz |
+| Path Pulse | Learn | BFS / Dijkstra / A* / Greedy on a neon maze with weighted rough terrain |
+| Vault Code | Puzzle | Mastermind, vault edition — crack the four-sigil code |
+| Lock On | Action | 45-second neon target range — gold cores pay triple |
 | **Comet Catcher** | **Original** | **Neon Vault original** — storm survival |
 | **Signal Pulse** | **Original** | **Neon Vault original** — one-button orbital timing |
 
