@@ -116,13 +116,20 @@
       ctx.fill();
       ctx.restore();
     }
-    /* head eyes */
+    /* head eyes (placed toward facing direction) */
     var h = snake[0];
     var cx = h.x * CELL + CELL / 2, cy = h.y * CELL + CELL / 2;
-    var eyeOffset = dir.x !== 0 ? { x: 2.4 * dir.x, y: 3.6 } : { x: 3.6, y: 2.4 * dir.y };
+    var off = 3.6, fwd = 4;
     ctx.fillStyle = '#0b0714';
-    ctx.beginPath(); ctx.arc(cx + (dir.x !== 0 ? eyeOffset.x : -eyeOffset.x), cy + (dir.x !== 0 ? -eyeOffset.y : eyeOffset.y * 0.9 - (dir.y > 0 ? 2.4 : 0) + (dir.y < 0 ? 2.4 : 0)), 1.7, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(cx + (dir.x !== 0 ? eyeOffset.x : eyeOffset.x), cy + (dir.x !== 0 ? eyeOffset.y : eyeOffset.y * 0.9 - (dir.y > 0 ? 2.4 : 0) + (dir.y < 0 ? 2.4 : 0)), 1.7, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath();
+    if (dir.x !== 0) {
+      ctx.arc(cx + dir.x * fwd, cy - off, 1.7, 0, Math.PI * 2);
+      ctx.arc(cx + dir.x * fwd, cy + off, 1.7, 0, Math.PI * 2);
+    } else {
+      ctx.arc(cx - off, cy + dir.y * fwd, 1.7, 0, Math.PI * 2);
+      ctx.arc(cx + off, cy + dir.y * fwd, 1.7, 0, Math.PI * 2);
+    }
+    ctx.fill();
   }
 
   function roundRect(x, y, w, h, r) {
