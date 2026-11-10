@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vault Code — Crack the Neon Vault</title>
+<meta name="description" content="A Neon Vault original: deduce a secret four-sigil code in ten tries. Black pegs mean right sigil, right slot — white pegs mean right sigil, wrong slot.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+<style>
+.vc-wrap { display:flex; gap:18px; align-items:flex-start; justify-content:center; padding:8px 4px; width:100%; max-width:680px; margin:0 auto; }
+.vc-door { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:10px; background:var(--panel-2); border:2px solid var(--line); border-radius:18px; padding:16px 18px; box-shadow:0 0 34px rgba(255,46,166,.12), inset 0 0 40px rgba(0,0,0,.45); }
+.vc-slots { display:flex; gap:10px; }
+.vc-slot { width:64px; height:64px; border-radius:14px; border:2px solid color-mix(in srgb, var(--cyan) 40%, var(--line)); background:#0d0a1c; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform .12s ease, box-shadow .15s ease, border-color .15s ease; padding:0; -webkit-tap-highlight-color:transparent; }
+.vc-slot:hover { transform:translateY(-2px); }
+.vc-slot.is-active { border-color:var(--cyan); box-shadow:0 0 18px rgba(0,229,255,.5), inset 0 0 14px rgba(0,229,255,.25); }
+.vc-slot svg { width:78%; height:78%; }
+.vc-palette { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.vc-sigil { width:46px; height:46px; border-radius:11px; border:2px solid var(--line); background:#0d0a1c; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; transition:all .12s ease; -webkit-tap-highlight-color:transparent; }
+.vc-sigil svg { width:74%; height:74%; }
+.vc-sigil.is-active { border-color:var(--amber); box-shadow:0 0 14px rgba(255,194,71,.6); transform:translateY(-3px); }
+.vc-palette-label, .vc-mini { font-family:'Press Start 2P',monospace; font-size:7px; color:var(--dim); letter-spacing:1px; text-align:center; }
+.vc-log { flex:1 1 auto; min-width:0; max-height:380px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding:2px; }
+.vc-row { display:flex; align-items:center; justify-content:space-between; gap:8px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:5px 10px; animation:rowIn .18s ease; }
+@keyframes rowIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+.vc-row-glyphs { display:flex; gap:6px; }
+.vc-row-glyphs svg { width:22px; height:22px; }
+.vc-pegs { display:flex; gap:4px; }
+.vc-peg { width:11px; height:11px; border-radius:50%; background:#1c1730; border:1px solid var(--line); }
+.vc-peg--exact { background:var(--amber); box-shadow:0 0 7px var(--amber); border-color:var(--amber); }
+.vc-peg--partial { background:#eceaff; box-shadow:0 0 5px rgba(236,234,255,.8); border-color:#eceaff; }
+.vc-row-index { font-family:'Press Start 2P',monospace; font-size:7px; color:var(--dim); width:18px; }
+@media (max-width:620px) { .vc-wrap { flex-direction:column; align-items:center; } .vc-log { width:100%; max-height:220px; } }
+</style>
+</head>
+<body class="game-page" data-game="vault-code">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">VAULT CODE</div>
+  <div class="chrome-actions">
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item">ATTEMPTS<span id="attemptsLeft">10</span></div>
+    <div class="hud-item hud-item--magenta">BEST<span id="best">0</span></div>
+    <div class="hud-actions">
+      <button type="button" class="nv-btn nv-btn--ghost" id="resetBtn">RESET ROW</button>
+      <button type="button" class="nv-btn" id="crackBtn">CRACK</button>
+      <button type="button" class="nv-btn nv-btn--ghost" id="restartBtn">NEW VAULT</button>
+    </div>
+  </div>
+  <div class="stage stage--pad" id="stage">
+    <div class="vc-wrap">
+      <div class="vc-door">
+        <div class="vc-slots" id="slots" role="group" aria-label="Code slots"></div>
+        <div class="vc-palette-label">SIGIL PALETTE</div>
+        <div class="vc-palette" id="palette" role="group" aria-label="Sigil palette"></div>
+        <div class="vc-mini">CLICK A SIGIL, THEN A SLOT · CLICK A SLOT TO CYCLE</div>
+      </div>
+      <div class="vc-log" id="log" role="log" aria-label="Guess history"></div>
+    </div>
+    <div class="stage-overlay" id="overlay" role="dialog" aria-label="Game state">
+      <h2 class="overlay-title" id="overlayTitle">VAULT CODE</h2>
+      <p class="overlay-sub" id="overlaySub">Six sigils. Four slots. Ten attempts. Amber peg — right sigil, right slot. White peg — right sigil, wrong slot. The vault is listening.</p>
+      <p class="overlay-score" id="overlayScore"></p>
+      <button type="button" class="nv-btn" id="overlayBtn">PICK THE LOCK</button>
+    </div>
+  </div>
+  <p class="game-help"><kbd>1</kbd>–<kbd>6</kbd> place sigil in active slot · <kbd>←</kbd> <kbd>→</kbd> move slot · <kbd>Enter</kbd> crack · amber = exact, white = right sigil/wrong slot · <kbd>R</kbd> new vault.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="vault-code.js"></script>
+</body>
+</html>
