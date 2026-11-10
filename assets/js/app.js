@@ -45,18 +45,33 @@
     { slug: 'path-pulse', name: 'Path Pulse', cat: 'Learn', accent: '#00e5ff',
       desc: 'BFS, Dijkstra, A* and Greedy Best-First carve a neon maze — rough ground costs five.',
       icon: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 5 9l6 4 6-8 2 6"/><circle cx="5" cy="19" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="11" r="1.6" fill="currentColor" stroke="none"/></g>' },
+    { slug: 'big-o-blitz', name: 'Big-O Blitz', cat: 'Learn', accent: '#ffd60a',
+      desc: 'Read the algorithm, slam its Big-O. Ten snippets, six complexity buckets, three strikes.',
+      icon: '<path d="M4 20h16M4 20V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><path d="M6 18c6-.5 8-6 12.5-12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>' },
     { slug: 'neon-sort', name: 'Neon Sort', cat: 'Learn', accent: '#ffd23f', original: true,
       desc: 'ORIGINAL — Watch six algorithms race under neon light, then name them blind in Guess That Sort.',
       icon: '<g fill="currentColor"><rect x="3.5" y="13" width="4" height="7" rx="1" opacity=".55"/><rect x="10" y="9" width="4" height="11" rx="1" opacity=".75"/><rect x="16.5" y="4" width="4" height="16" rx="1"/></g>' },
     { slug: 'comet-catcher', name: 'Comet Catcher', cat: 'Original', accent: '#ff2ea6', original: true,
       desc: 'ORIGINAL — Pilot the VAULT-9 scoop. Catch comets, dodge meteors, survive the storm.',
       icon: '<path d="M4 18 14 8M6 21 16 11M3 13 9 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><path d="M14.5 3.5 20 4l.5 5.5-4 4-5-5z" fill="currentColor"/>' },
+    { slug: 'neon-life', name: 'Neon Life', cat: 'Toys', accent: '#a6ff3f',
+      desc: 'Conway\'s Game of Life, charged up. Paint cells, drop in the classics, watch three rules eat the dark.',
+      icon: '<g fill="currentColor"><rect x="10" y="2" width="4" height="4"/><rect x="10" y="10" width="4" height="4" opacity=".85"/><rect x="10" y="18" width="4" height="4" opacity=".5"/><rect x="2" y="10" width="4" height="4" opacity=".85"/><rect x="18" y="10" width="4" height="4" opacity=".5"/></g>' },
+    { slug: 'langton-ant', name: 'Langton\'s Ant', cat: 'Toys', accent: '#ffc247',
+      desc: 'One ant, simple rules, ridiculous emergent cities — including the legendary chaotic 12-state rules.',
+      icon: '<path d="M12 3.5 17 13H7z" fill="currentColor"/><circle cx="12" cy="17.5" r="2.1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21h3M10 21h3M16 21h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>' },
+    { slug: 'dvd-bounce', name: 'DVD Bounce', cat: 'Toys', accent: '#ff2ea6',
+      desc: 'The sacred screensaver in neon. Wall kisses shift the hue — a perfect corner hit pays out in glory.',
+      icon: '<rect x="3" y="6" width="18" height="12" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M10 15.2 13 8.8l3.2 6.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { slug: 'flow-vault', name: 'Flow Vault', cat: 'Toys', accent: '#00e5ff',
+      desc: 'Twelve hundred motes ride a hidden wind. Hold the canvas to seize the storm and swirl it around your finger.',
+      icon: '<path d="M3 9c4-4 8 4 12 0s6-3 6-3M3 14c4-4 8 4 12 0s6-3 6-3M3 19c4-4 8 4 12 0s6-3 6-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>' },
     { slug: 'signal-pulse', name: 'Signal Pulse', cat: 'Original', accent: '#ffc247', original: true,
       desc: 'ORIGINAL — One button. One rotating beam. Fire only inside the beacon arc.',
       icon: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><path d="M12 12 18 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 3a9 9 0 0 1 7.8 4.5" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/>' }
   ];
 
-  var CATEGORIES = ['All', 'Action', 'Puzzle', 'Classic', 'Original', 'Learn'];
+  var CATEGORIES = ['All', 'Action', 'Puzzle', 'Classic', 'Original', 'Learn', 'Toys'];
   var grid = document.getElementById('gameGrid');
   var emptyState = document.getElementById('emptyState');
   var searchInput = document.getElementById('searchInput');
