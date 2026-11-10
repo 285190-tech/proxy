@@ -21,7 +21,7 @@
   var BOMB_SVG = '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="23" cy="29" r="13" fill="#2b2b3d"/><circle cx="19" cy="25" r="3.4" fill="#55557a"/><path d="M31 18c2-2.5 3.5-4 6-5" stroke="#ff9f1c" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M37.4 6.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z" fill="#ffc247"/></svg>';
 
   var holes = [];
-  var score, timeLeft, playing, spawnTimer, countdownTimer, activeMoles, whacks, taps;
+  var score, timeLeft, playing, spawnTimer, countdownTimer, whacks, taps;
 
   /* build holes */
   for (var i = 0; i < 9; i++) {

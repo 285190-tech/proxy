@@ -21,7 +21,7 @@
   var PADDLE_W = 10, PADDLE_H = 64, PADDLE_SPEED = 340, CPU_SPEED = 235;
   var WIN_SCORE = 7;
 
-  var player, cpu, ball, playerScore, cpuScore, score, state, rafId, lastTime, serveTimer;
+  var player, cpu, ball, playerScore, cpuScore, score, state, rafId, lastTime;
   /* state: 'serve' | 'playing' | 'paused' | 'over' */
 
   function resetMatch() {
@@ -39,7 +39,6 @@
     var speed = 300;
     ball = { x: W / 2, y: H / 2, r: 6, vx: Math.cos(angle) * speed * direction, vy: Math.sin(angle) * speed, speed: speed };
     state = 'serve';
-    serveTimer = 0;
   }
   function showOverlay(title, sub, scoreText, btnText, cyan) {
     overlayTitle.textContent = title;

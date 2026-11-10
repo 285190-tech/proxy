@@ -120,16 +120,6 @@
     btn.className = classes;
     btn.innerHTML = inner;
   }
-  function reveal(index) {
-    if (revealed[index] || flagged[index] || over) return;
-    revealed[index] = true;
-    revealedCount++;
-    if (mines[index]) { updateCell(index); return; }
-    if (adjacent[index] === 0) {
-      neighbors(index).forEach(reveal);
-    }
-    updateCell(index);
-  }
   function revealQuiet(index) { /* batch: reveal without per-cell DOM churn */
     revealed[index] = true;
     revealedCount++;
