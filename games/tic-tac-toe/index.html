@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic-Tac-Toe vs AI — Neon Vault</title>
+<meta name="description" content="Three in a row against a minimax machine. Pick your difficulty and take on the vault's coldest calculator.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+<style>
+.ttt-wrap { display:flex; flex-direction:column; gap:12px; align-items:center; }
+.ttt-difficulty { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.ttt-chip {
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px;
+  background:var(--panel-2); color:var(--text); border:1px solid var(--line);
+  border-radius:999px; padding:9px 16px; min-height:40px; cursor:pointer; transition:all .15s ease;
+}
+.ttt-chip[aria-pressed="true"] { background:var(--violet); border-color:var(--violet); color:#1c0930; box-shadow:0 0 14px rgba(178,107,255,.45); }
+.ttt-board { display:grid; grid-template-columns:repeat(3, minmax(0, 92px)); gap:10px; }
+.ttt-cell {
+  width:100%; aspect-ratio:1; background:var(--panel-2); border:1px solid var(--line); border-radius:14px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; padding:14px;
+  transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.ttt-cell:hover:not(:disabled) { border-color:var(--violet); transform:translateY(-2px); box-shadow:0 8px 20px rgba(178,107,255,.18); }
+.ttt-cell:disabled { cursor:default; }
+.ttt-cell svg { width:100%; height:100%; }
+.ttt-cell.win-cell { border-color:var(--lime); box-shadow:0 0 18px rgba(166,255,63,.45); background:#141f0a; }
+.ttt-status { font-family:'Press Start 2P',monospace; font-size:9px; color:var(--dim); letter-spacing:1px; min-height:18px; text-align:center; }
+.ttt-status b { color:var(--amber); font-weight:400; }
+@media (max-width:480px) { .ttt-board { grid-template-columns:repeat(3, minmax(0, 76px)); gap:8px; } }
+</style>
+</head>
+<body class="game-page" data-game="tic-tac-toe">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">TIC-TAC-TOE</div>
+  <div class="chrome-actions">
+    <button class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item">SCORE<span id="score">0</span></div>
+    <div class="hud-item hud-item--magenta">BEST<span id="best">0</span></div>
+    <div class="hud-item">W·D·L<span id="tally">0·0·0</span></div>
+    <div class="hud-actions">
+      <button class="nv-btn" id="restartBtn" type="button">NEW ROUND</button>
+    </div>
+  </div>
+  <div class="stage stage--pad" id="stage">
+    <div class="ttt-wrap">
+      <div class="ttt-difficulty" role="group" aria-label="Difficulty">
+        <button class="ttt-chip" data-diff="rookie" type="button" aria-pressed="false">ROOKIE</button>
+        <button class="ttt-chip" data-diff="adept" type="button" aria-pressed="true">ADEPT</button>
+        <button class="ttt-chip" data-diff="master" type="button" aria-pressed="false">MASTER</button>
+      </div>
+      <div class="ttt-board" id="board" role="grid" aria-label="Tic-tac-toe board"></div>
+      <div class="ttt-status" id="status" aria-live="polite"><b>YOUR MOVE</b> — you are X</div>
+    </div>
+    <div class="stage-overlay" id="overlay" role="dialog" aria-label="Round result">
+      <h2 class="overlay-title" id="overlayTitle">YOU WIN</h2>
+      <p class="overlay-sub" id="overlaySub">Three in a row. Beautiful.</p>
+      <p class="overlay-score" id="overlayScore"></p>
+      <button class="nv-btn" id="overlayBtn" type="button">NEXT ROUND</button>
+    </div>
+  </div>
+  <p class="game-help"><kbd>Tap / click</kbd> a cell · you are <strong>X</strong>, the machine is <strong>O</strong> · MASTER never loses (draws are victories) · <kbd>R</kbd> new round.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="tic-tac-toe.js"></script>
+</body>
+</html>

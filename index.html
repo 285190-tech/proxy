@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Vault — Free Browser Arcade</title>
+<meta name="description" content="Neon Vault is a free, fast, static browser arcade: twelve hand-built games from Snake and Tetris to original originals, with CRT glow, synthesized sound and zero accounts or tracking.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<div class="ambient-grid" aria-hidden="true"></div>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="nav">
+  <a class="logo" href="./" aria-label="Neon Vault home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>
+    <span class="logo-word">NEON<br><em>VAULT</em></span>
+  </a>
+  <nav class="nav-actions" aria-label="Site controls">
+    <a class="pill-btn" href="https://github.com/285190-tech/proxy" target="_blank" rel="noopener noreferrer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C16.3 4.8 17.3 5.1 18.3 5.4c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.7 5.6-5.3 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A10.5 10.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
+      SOURCE
+    </a>
+    <button class="icon-btn" id="crtToggle" aria-pressed="false" aria-label="Toggle CRT filter" title="CRT filter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="14" rx="2.5"/><path d="M8 21h8M12 18v3"/></svg>
+    </button>
+    <button class="icon-btn" id="muteToggle" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off">
+      <svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg>
+      <svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg>
+    </button>
+  </nav>
+</header>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-copy">
+    <span class="coin-line"><span class="coin-dot"></span>INSERT COIN — FREE ENTRY</span>
+    <h1 class="hero-title"><span class="l1">NEON</span><br><span class="l2">VAULT</span></h1>
+    <p class="hero-tag">The high-voltage browser arcade. Twelve cabinets, zero quarters.</p>
+    <p class="hero-sub">Snake, Tetris, Space Invaders and nine more hand-built cabinets — including <strong>two originals you won't find anywhere else</strong>. Everything runs locally in your browser: no downloads, no accounts, no ads, no tracking. Your high scores live on your own device.</p>
+    <div class="hero-ctas">
+      <a class="big-btn" href="#library">PRESS START
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <button class="ghost-link" id="randomGameBtn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.4" fill="currentColor" stroke="none"/></svg>
+        SURPRISE ME
+      </button>
+    </div>
+    <div class="hero-facts" aria-label="Vault facts">
+      <div class="fact"><b>12</b><span>fully playable cabinets</span></div>
+      <div class="fact"><b>2</b><span>original Neon Vault games</span></div>
+      <div class="fact"><b>0</b><span>accounts, ads or trackers</span></div>
+    </div>
+  </div>
+
+  <div class="cabinet-wrap" aria-hidden="true">
+    <!-- Original inline-SVG arcade cabinet artwork -->
+    <svg class="cabinet" viewBox="0 0 300 430" role="img" aria-label="Neon arcade cabinet">
+      <path d="M62 24 L238 24 L266 132 L266 396 L34 396 L34 132 Z" fill="#17112e" stroke="#3a3170" stroke-width="2"/>
+      <path d="M62 24 L238 24 L266 132 L34 132 Z" fill="#1d1737" stroke="#3a3170" stroke-width="2"/>
+      <rect x="70" y="38" width="160" height="38" rx="7" fill="#0d0920" stroke="#ff2ea6" stroke-width="2"/>
+      <text x="150" y="63" text-anchor="middle" font-family="'Press Start 2P',monospace" font-size="13" fill="#ff2ea6" letter-spacing="2">NEON VLT</text>
+      <rect class="cabinet-glow" x="60" y="92" width="180" height="140" rx="12" fill="#050310" stroke="#00e5ff" stroke-width="2"/>
+      <g class="screen-invader" transform="translate(88 122) scale(1.12)" fill="#00e5ff" opacity="0.95">
+        <rect x="18" y="0" width="9" height="9"/><rect x="72" y="0" width="9" height="9"/><rect x="27" y="9" width="9" height="9"/><rect x="63" y="9" width="9" height="9"/><rect x="18" y="18" width="9" height="9"/><rect x="27" y="18" width="9" height="9"/><rect x="36" y="18" width="9" height="9"/><rect x="45" y="18" width="9" height="9"/><rect x="54" y="18" width="9" height="9"/><rect x="63" y="18" width="9" height="9"/><rect x="72" y="18" width="9" height="9"/><rect x="9" y="27" width="9" height="9"/><rect x="18" y="27" width="9" height="9"/><rect x="36" y="27" width="9" height="9"/><rect x="45" y="27" width="9" height="9"/><rect x="54" y="27" width="9" height="9"/><rect x="72" y="27" width="9" height="9"/><rect x="81" y="27" width="9" height="9"/><rect x="0" y="36" width="9" height="9"/><rect x="9" y="36" width="9" height="9"/><rect x="18" y="36" width="9" height="9"/><rect x="27" y="36" width="9" height="9"/><rect x="36" y="36" width="9" height="9"/><rect x="45" y="36" width="9" height="9"/><rect x="54" y="36" width="9" height="9"/><rect x="63" y="36" width="9" height="9"/><rect x="72" y="36" width="9" height="9"/><rect x="81" y="36" width="9" height="9"/><rect x="90" y="36" width="9" height="9"/><rect x="0" y="45" width="9" height="9"/><rect x="18" y="45" width="9" height="9"/><rect x="27" y="45" width="9" height="9"/><rect x="36" y="45" width="9" height="9"/><rect x="45" y="45" width="9" height="9"/><rect x="54" y="45" width="9" height="9"/><rect x="63" y="45" width="9" height="9"/><rect x="72" y="45" width="9" height="9"/><rect x="90" y="45" width="9" height="9"/><rect x="0" y="54" width="9" height="9"/><rect x="18" y="54" width="9" height="9"/><rect x="72" y="54" width="9" height="9"/><rect x="90" y="54" width="9" height="9"/><rect x="27" y="63" width="9" height="9"/><rect x="36" y="63" width="9" height="9"/><rect x="54" y="63" width="9" height="9"/><rect x="63" y="63" width="9" height="9"/>
+      </g>
+      <rect x="60" y="92" width="180" height="140" rx="12" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.8"/>
+      <path d="M56 246 L244 246 L262 316 L38 316 Z" fill="#1d1836" stroke="#3a3170" stroke-width="2"/>
+      <circle cx="105" cy="284" r="17" fill="#0d0920" stroke="#ffc247" stroke-width="2"/>
+      <rect x="102" y="252" width="6" height="20" rx="3" fill="#ffc247"/>
+      <circle cx="105" cy="250" r="9" fill="#ff2ea6"/>
+      <circle cx="176" cy="282" r="8.5" fill="#00e5ff"/>
+      <circle cx="207" cy="282" r="8.5" fill="#ff4d5e"/>
+      <rect x="118" y="330" width="64" height="46" rx="6" fill="#0d0920" stroke="#3a3170" stroke-width="2"/>
+      <rect x="132" y="344" width="6" height="16" rx="2" fill="#ffc247"/>
+      <rect x="162" y="344" width="6" height="16" rx="2" fill="#ffc247"/>
+      <text x="150" y="392" text-anchor="middle" font-family="'Press Start 2P',monospace" font-size="6" fill="#918cb8" letter-spacing="1">1 COIN · 1 PLAY</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════════ TICKER ══════════ -->
+<div class="ticker" aria-hidden="true"><div class="ticker-inner" id="tickerInner"></div></div>
+
+<!-- ══════════ RECENTLY PLAYED ══════════ -->
+<section class="shelf" id="recentShelf" hidden aria-label="Recently played">
+  <div class="shelf-head">
+    <h2 class="shelf-title"><span class="tick">▸</span>RECENTLY PLAYED</h2>
+    <span class="shelf-note">stored only on this device</span>
+  </div>
+  <div class="recent-row" id="recentRow"></div>
+</section>
+
+<!-- ══════════ LIBRARY ══════════ -->
+<section class="shelf" id="library" aria-label="Game library">
+  <div class="shelf-head">
+    <h2 class="shelf-title"><span class="tick">▸</span>THE CABINETS</h2>
+    <span class="shelf-note"><span id="visibleCount">12</span> of 12 shown</span>
+  </div>
+  <div class="controls">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+      <input id="searchInput" type="search" placeholder="Search cabinets…" autocomplete="off" aria-label="Search games">
+    </div>
+    <div class="chips" id="categoryChips" role="group" aria-label="Filter by category"></div>
+  </div>
+  <div class="game-grid" id="gameGrid"></div>
+  <div class="empty-state" id="emptyState" hidden>
+    <b>GAME OVER — NO MATCH</b>
+    Nothing in the vault matches that. Try a different search or clear the filter.
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <small><strong style="color:var(--text)">NEON VAULT</strong> is a static, open-source arcade. No accounts, no ads, no analytics, no cookies — scores and preferences never leave your browser. Every game runs offline once loaded.</small>
+  <div class="footer-links">
+    <a href="https://github.com/285190-tech/proxy" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="DEPLOY.md">Deploy your own</a>
+  </div>
+</footer>
+
+<noscript><p style="padding:24px;text-align:center;color:#ffc247;font-family:monospace">Neon Vault needs JavaScript to run its cabinets.</p></noscript>
+<script src="assets/js/audio.js"></script>
+<script src="assets/js/nv.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
