@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big-O Blitz — The Complexity Quiz</title>
+<meta name="description" content="A Neon Vault original: read the algorithm, slam its Big-O. Six time-complexity buckets, ten questions a round, streaks pay out.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+<style>
+.bo-wrap { display:flex; flex-direction:column; gap:12px; align-items:center; padding:8px 4px; width:100%; max-width:640px; margin:0 auto; }
+.bo-code { width:100%; background:#0d0a1c; border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:12px; padding:14px 16px; overflow-x:auto; }
+.bo-code code { font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.65; color:#ffd9a0; white-space:pre; }
+.bo-question { font-family:'Press Start 2P',monospace; font-size:9px; color:var(--dim); letter-spacing:1px; align-self:flex-start; }
+.bo-question b { color:var(--cyan); font-weight:400; }
+.bo-options { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; width:100%; }
+.bo-option { font-family:'Press Start 2P',monospace; font-size:11px; padding:16px 8px; border-radius:12px; border:2px solid var(--line); background:var(--panel-2); color:var(--text); cursor:pointer; transition:all .13s ease; letter-spacing:1px; -webkit-tap-highlight-color:transparent; }
+.bo-option:hover { border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,229,255,.14); }
+.bo-option.is-correct { border-color:var(--lime); color:var(--lime); box-shadow:0 0 18px rgba(166,255,63,.4); }
+.bo-option.is-wrong { border-color:var(--red); color:var(--red); box-shadow:0 0 18px rgba(255,77,94,.4); }
+.bo-why { min-height:34px; font-size:12px; color:var(--dim); text-align:center; padding:0 8px; line-height:1.5; }
+.bo-why b { color:var(--amber); font-weight:600; }
+.bo-progress { display:flex; gap:6px; }
+.bo-pip { width:22px; height:6px; border-radius:3px; background:var(--panel-2); border:1px solid var(--line); }
+.bo-pip.is-done { background:var(--cyan); box-shadow:0 0 7px rgba(0,229,255,.6); border-color:var(--cyan); }
+.bo-pip.is-now { border-color:var(--amber); background:rgba(255,194,71,.28); }
+@media (max-width:520px) { .bo-options { grid-template-columns:repeat(2, 1fr); } }
+</style>
+</head>
+<body class="game-page" data-game="big-o-blitz">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">BIG-O BLITZ</div>
+  <div class="chrome-actions">
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item">QUESTION<span id="questionNo">–</span></div>
+    <div class="hud-item">SCORE<span id="score">0</span></div>
+    <div class="hud-item">STREAK<span id="streak">0</span></div>
+    <div class="hud-item">STRIKES<span id="strikes">●●●</span></div>
+    <div class="hud-item hud-item--magenta">BEST<span id="best">0</span></div>
+    <div class="hud-actions">
+      <button type="button" class="nv-btn" id="restartBtn">NEW ROUND</button>
+    </div>
+  </div>
+  <div class="stage stage--pad" id="stage">
+    <div class="bo-wrap">
+      <div class="bo-progress" id="progress" aria-hidden="true"></div>
+      <div class="bo-question">READ THE CODE — NAME ITS <b>TIME COMPLEXITY</b></div>
+      <pre class="bo-code"><code id="codeBlock">press start</code></pre>
+      <div class="bo-options" id="options" role="group" aria-label="Complexity options"></div>
+      <p class="bo-why" id="why"></p>
+    </div>
+    <div class="stage-overlay" id="overlay" role="dialog" aria-label="Game state">
+      <h2 class="overlay-title" id="overlayTitle">BIG-O BLITZ</h2>
+      <p class="overlay-sub" id="overlaySub">Ten snippets, six buckets. O(1) whispers, O(log n) halves, O(n) walks, O(n log n) divides and conquers, O(n²) brute-forces, O(2ⁿ) unravels. Three wrong answers and the vault laughs at you.</p>
+      <p class="overlay-score" id="overlayScore"></p>
+      <button type="button" class="nv-btn" id="overlayBtn">BLIND THE COMPILER</button>
+    </div>
+  </div>
+  <p class="game-help"><kbd>1</kbd>–<kbd>6</kbd> pick an answer · score = 100 + 25×streak per correct answer · wrong answers cost a strike · <kbd>R</kbd> new round.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="big-o-blitz.js"></script>
+</body>
+</html>
