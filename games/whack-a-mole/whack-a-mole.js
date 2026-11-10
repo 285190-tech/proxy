@@ -112,9 +112,9 @@
     var holeEl = event.target.closest('.wm-hole');
     if (!holeEl || !playing) return;
     event.preventDefault();
+    taps += 1;
     var hole = holes[parseInt(holeEl.dataset.index, 10)];
     if (!hole.type) return;
-    taps += 1;
     whacks += 1;
     var type = hole.type;
     hole.el.classList.add('is-hit');
