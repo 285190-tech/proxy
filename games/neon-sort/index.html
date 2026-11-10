@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Sort — Learn Algorithms the Arcade Way</title>
+<meta name="description" content="Visualize bubble, selection, insertion, merge, quick and heap sort with neon bars — then prove you can recognize them in Guess That Sort. A Neon Vault original.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+<style>
+.sort-wrap { display:flex; flex-direction:column; gap:10px; align-items:center; padding:14px; }
+.sort-canvas-box { background:#070512; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.sort-canvas-box canvas { display:block; width:min(540px, 92vw); height:auto; touch-action:none; }
+.mode-chips, .algo-chips { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.neon-chip {
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:11.5px;
+  background:var(--panel-2); color:var(--text); border:1px solid var(--line);
+  border-radius:999px; padding:9px 15px; min-height:40px; cursor:pointer; transition:all .15s ease;
+}
+.neon-chip[aria-pressed="true"] { background:var(--amber); border-color:var(--amber); color:#241300; box-shadow:0 0 14px rgba(255,194,71,.4); }
+.algo-chips .neon-chip[aria-pressed="true"] { background:var(--cyan); border-color:var(--cyan); color:#032830; box-shadow:0 0 14px rgba(0,229,255,.4); }
+.sort-controls { display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center; }
+.slider-group { display:flex; align-items:center; gap:8px; color:var(--dim); font-size:11px; font-weight:600; letter-spacing:.5px; }
+.slider-group input[type="range"] { accent-color: var(--cyan); width:110px; cursor:pointer; }
+.quiz-options { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px; width:100%; max-width:540px; }
+.quiz-btn {
+  font-family:'Press Start 2P',monospace; font-size:9px; letter-spacing:.5px; line-height:1.6;
+  background:var(--panel-2); color:var(--text); border:1px solid var(--line); border-radius:12px;
+  padding:13px 10px; cursor:pointer; text-align:center; transition:all .15s ease; min-height:52px;
+}
+.quiz-btn:hover { border-color:var(--cyan); }
+.quiz-btn.is-correct { background:#12330f; border-color:var(--lime); color:var(--lime); box-shadow:0 0 14px rgba(166,255,63,.35); }
+.quiz-btn.is-wrong { background:#3a0d18; border-color:var(--red); color:var(--red); }
+.quiz-btn:disabled { opacity:.85; cursor:default; }
+.opt-index { opacity:.55; }
+.shake { animation:optShake .35s ease; }
+@keyframes optShake { 0%,100% { transform:translateX(0); } 25% { transform:translateX(-7px); } 75% { transform:translateX(7px); } }
+[data-mode-hud][hidden] { display:none !important; }
+@media (max-width:560px) { .quiz-options { grid-template-columns:1fr 1fr; } .quiz-btn { font-size:8px; } }
+</style>
+</head>
+<body class="game-page" data-game="neon-sort">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">NEON SORT</div>
+  <div class="chrome-actions">
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item" data-mode-hud="visualize">COMPARISONS<span id="cmpCount">0</span></div>
+    <div class="hud-item" data-mode-hud="visualize">WRITES<span id="writeCount">0</span></div>
+    <div class="hud-item" data-mode-hud="quiz" hidden>SCORE<span id="score">0</span></div>
+    <div class="hud-item hud-item--magenta">BEST<span id="best">0</span></div>
+    <div class="hud-item" data-mode-hud="quiz" hidden>STREAK<span id="streak">0</span></div>
+    <div class="hud-item" data-mode-hud="quiz" hidden>STRIKES<span id="strikes">●●●</span></div>
+    <div class="hud-item" data-mode-hud="visualize">STATUS<span id="visStatus">READY</span></div>
+    <div class="hud-actions">
+      <button type="button" class="nv-btn nv-btn--ghost" id="pauseBtn">PAUSE</button>
+      <button type="button" class="nv-btn" id="restartBtn">SHUFFLE</button>
+    </div>
+  </div>
+  <div class="stage stage--pad" id="stage">
+    <div class="sort-wrap">
+      <div class="mode-chips" role="group" aria-label="Mode">
+        <button type="button" class="neon-chip" id="modeVisualize" aria-pressed="true">VISUALIZER</button>
+        <button type="button" class="neon-chip" id="modeQuiz" aria-pressed="false">GUESS THAT SORT</button>
+      </div>
+      <div class="sort-canvas-box">
+        <canvas id="sortCanvas" width="540" height="300" role="application" aria-label="Sorting algorithm visualization"></canvas>
+      </div>
+      <div class="algo-chips" id="algoChips" role="group" aria-label="Algorithm"></div>
+      <div class="sort-controls" id="visualizerControls">
+        <label class="slider-group">SIZE <input type="range" id="sizeRange" min="16" max="96" step="4" value="48" aria-label="Array size"></label>
+        <label class="slider-group">SPEED <input type="range" id="speedRange" min="0" max="100" step="1" value="55" aria-label="Visualization speed"></label>
+        <button type="button" class="nv-btn nv-btn--ghost nv-btn--small" id="stepBtn">STEP</button>
+      </div>
+      <div class="quiz-options" id="quizOptions" role="group" aria-label="Your guesses" hidden></div>
+    </div>
+    <div class="stage-overlay" id="overlay" role="dialog" aria-label="Game state">
+      <h2 class="overlay-title" id="overlayTitle">NEON SORT</h2>
+      <p class="overlay-sub" id="overlaySub">Watch six classic algorithms race through neon bars — then prove you can name them blind.</p>
+      <p class="overlay-score" id="overlayScore"></p>
+      <button type="button" class="nv-btn" id="overlayBtn">START SORTING</button>
+    </div>
+  </div>
+  <p class="game-help"><kbd>Space</kbd> play/pause · <kbd>1</kbd>–<kbd>6</kbd> pick algorithm (visualizer) · <kbd>1</kbd>–<kbd>4</kbd> answer (quiz) · <kbd>R</kbd> shuffle/restart · bars glow <strong>magenta</strong> on compare, <strong>amber</strong> on write, <strong>lime</strong> when settled.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="neon-sort.js"></script>
+</body>
+</html>

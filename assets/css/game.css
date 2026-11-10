@@ -178,3 +178,4 @@ body.crt::after {
 .tetris-next-label { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--dim); letter-spacing: 1px; }
 .tetris-next-canvas { background: #0a0716; border: 1px solid var(--line); border-radius: 10px; }
 .touch-btn--fire { min-width: 170px; height: 68px; font-size: 11px; }
+.nv-btn--small { min-height: 40px; padding: 0 14px; }
