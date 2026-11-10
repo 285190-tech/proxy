@@ -289,3 +289,6 @@ body.crt::after { background: radial-gradient(120% 90% at 50% 40%, transparent 5
 body.turbo .ambient { animation: hueSpin 1.1s linear infinite; }
 body.turbo .ambient-grid { animation: hueSpin 1.1s linear infinite reverse; }
 @keyframes hueSpin { to { filter: hue-rotate(360deg); } }
+
+.footer-strong { color: var(--text); }
+.noscript-note { padding: 24px; text-align: center; color: #ffc247; font-family: 'Space Grotesk', monospace; }
