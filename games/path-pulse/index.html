@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Path Pulse — The Algorithm Maze</title>
+<meta name="description" content="A Neon Vault original: watch BFS, Dijkstra, A* and Greedy Best-First carve a path through a neon maze. Step it, speed it, beat it.">
+<meta name="theme-color" content="#0b0714">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/game.css">
+<style>
+.pp-wrap { display:flex; flex-direction:column; gap:14px; align-items:center; padding:6px 2px; width:100%; }
+.pp-canvas { width:100%; max-width:660px; height:auto; display:block; border-radius:16px; border:2px solid var(--line); background:#0d0a1c; box-shadow:0 0 34px rgba(0,229,255,.12), inset 0 0 44px rgba(0,0,0,.55); }
+.pp-algos { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.pp-chip { font-family:'Press Start 2P',monospace; font-size:8px; letter-spacing:1px; padding:9px 12px; border-radius:999px; border:1px solid var(--line); background:var(--panel-2); color:var(--dim); cursor:pointer; transition:all .15s ease; -webkit-tap-highlight-color:transparent; }
+.pp-chip:hover { border-color:var(--cyan); color:var(--text); }
+.pp-chip.is-active { color:#0b0714; background:var(--cyan); border-color:var(--cyan); box-shadow:0 0 16px rgba(0,229,255,.55); }
+.pp-controls { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center; }
+.pp-speed { display:flex; align-items:center; gap:10px; font-family:'Press Start 2P',monospace; font-size:7px; color:var(--dim); letter-spacing:1px; }
+.pp-speed input[type=range] { accent-color:var(--cyan); width:130px; }
+.pp-status { font-family:'Press Start 2P',monospace; font-size:8px; letter-spacing:1px; color:var(--amber); min-height:14px; text-align:center; }
+.pp-legend { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; font-size:11px; color:var(--dim); }
+.pp-legend span { display:flex; align-items:center; gap:6px; }
+.pp-swatch { width:13px; height:13px; border-radius:4px; display:inline-block; border:1px solid rgba(255,255,255,.18); }
+.pp-swatch--wall { background:#7a5cff; }
+.pp-swatch--rough { background:#3a2f1a; border-color:#ffc247; }
+.pp-swatch--start { background:#a6ff3f; }
+.pp-swatch--goal { background:#ff2ea6; }
+.pp-swatch--visit { background:#0f4b5c; }
+.pp-swatch--path { background:#a6ff3f; box-shadow:0 0 8px #a6ff3f; }
+</style>
+</head>
+<body class="game-page" data-game="path-pulse">
+<header class="chrome">
+  <a class="chrome-logo" href="../../index.html" aria-label="Back to Neon Vault"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#151027"/><g fill="#ff2ea6"><rect x="6" y="9" width="3" height="3"/><rect x="23" y="9" width="3" height="3"/><rect x="9" y="12" width="14" height="3"/><rect x="6" y="12" width="3" height="3"/><rect x="23" y="12" width="3" height="3"/><rect x="9" y="18" width="3" height="3"/><rect x="20" y="18" width="3" height="3"/><rect x="6" y="21" width="3" height="3"/><rect x="14" y="18" width="4" height="3"/><rect x="23" y="21" width="3" height="3"/></g></svg>NEON&nbsp;<em>VAULT</em></a>
+  <div class="chrome-game">PATH PULSE</div>
+  <div class="chrome-actions">
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="Toggle sound" title="Sound on/off"><svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 6.5a8.5 8.5 0 0 1 0 11"/></svg><svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="m16 9.5 5 5m0-5-5 5"/></svg></button>
+  </div>
+</header>
+<main class="game-main">
+  <div class="game-hud">
+    <div class="hud-item">VISITED<span id="visitedCount">0</span></div>
+    <div class="hud-item">PATH COST<span id="pathCost">–</span></div>
+    <div class="hud-item hud-item--magenta">PATH LENGTH<span id="pathLength">–</span></div>
+    <div class="hud-actions">
+      <button type="button" class="nv-btn nv-btn--ghost" id="stepBtn">STEP</button>
+      <button type="button" class="nv-btn" id="runBtn">RUN</button>
+      <button type="button" class="nv-btn nv-btn--ghost" id="newMazeBtn">NEW MAZE</button>
+    </div>
+  </div>
+  <div class="stage stage--pad" id="stage">
+    <div class="pp-wrap">
+      <canvas id="mazeCanvas" width="660" height="360" role="application" aria-label="Pathfinding maze canvas" class="pp-canvas"></canvas>
+      <div class="pp-algos" id="algoChips" role="group" aria-label="Algorithm"></div>
+      <div class="pp-controls">
+        <label class="pp-speed">SPEED<input type="range" id="speedRange" min="1" max="30" value="6" step="1" aria-label="Steps per frame"></label>
+        <label class="pp-speed">WALLS<input type="range" id="wallRange" min="10" max="38" value="22" step="2" aria-label="Wall density percent"></label>
+      </div>
+      <div class="pp-status" id="status" aria-live="polite">READY — pick an algorithm, hit RUN</div>
+      <div class="pp-legend" aria-hidden="true">
+        <span><i class="pp-swatch pp-swatch--start"></i>Start</span>
+        <span><i class="pp-swatch pp-swatch--goal"></i>Goal</span>
+        <span><i class="pp-swatch pp-swatch--wall"></i>Wall</span>
+        <span><i class="pp-swatch pp-swatch--rough"></i>Rough ×5</span>
+        <span><i class="pp-swatch pp-swatch--visit"></i>Visited</span>
+        <span><i class="pp-swatch pp-swatch--path"></i>Path</span>
+      </div>
+    </div>
+  </div>
+  <p class="game-help"><kbd>1</kbd>–<kbd>4</kbd> algorithm · <kbd>Space</kbd> run / pause · <kbd>S</kbd> single step · <kbd>R</kbd> new maze · rough ground costs 5 — BFS ignores it, Dijkstra and A* respect it.</p>
+</main>
+<script src="../../assets/js/audio.js"></script>
+<script src="../../assets/js/nv.js"></script>
+<script src="path-pulse.js"></script>
+</body>
+</html>
